@@ -1,0 +1,122 @@
+<!-- Container for the Vehicle Routing Page -->
+{% load static %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Date picker -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="icon" href= {% static "/bike_sharing_system/img/favicon.ico" %} type="image/gif" type="image/gif" />
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href= {% static "/bike_sharing_system/css/css.css" %} >
+<!--Print library-->
+      <!-- https://printjs.crabbly.com/ -->
+      <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css">
+<script>
+    function print_instructions(){
+    var instr = document.getElementById('instructions');
+    var printable= instr.contentWindow.document.body.innerHTML;
+    p = document.getElementById('printinst');
+    p.innerHTML = printable;
+    printJS('printinst', 'html');
+    }
+
+    // loader animation: https://codepen.io/AdamDipinto/pen/ewKxwE
+    function loader(){
+      loader = document.getElementById('loader');
+      loader.style.display = "block";
+    }
+</script>
+</head>
+   
+<body>
+    <!-- Bootstrap Template https://getbootstrap.com/docs/3.3/examples/starter-template/ -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-inline">
+          <div class="navbar-header">
+          </div>
+            <ul class="nav navbar-nav navbar">
+              <li><a href="/../">SIMULATION</a></li>
+              <li><a href="/planner/forecast">DEMAND FORECAST</a></li>
+              <li><a href="/planner/vehicle_routing">OPTIMIZATION</a></li>
+            </ul>
+          </div>
+      </nav>
+
+
+    <!-- <div class="jumbotron text-center" style='margin-top: 5%;'> -->
+      <div class="container text-center">
+        <div style="padding-top: 10%; margin-bottom: 3%;">
+            <h3 class='text-center'>Optimize Bike Allocation Between Parking Stations</h3>
+        </div>
+        <form method="POST" class='form-inline justify-content-center' onsubmit="loader();">
+            {% csrf_token %}
+            <div class="form-group" style="padding-right: 5%;">
+            <label for='date' style="padding-bottom: 5%;">Date:</label>
+            <input type='date' id='date' name='date' required />
+            </div>
+            <div class="form-group" style="padding-right: 5%;">
+            <label for='vehicle_capacity' style="padding-bottom: 3%;">Vehicle Capacity:</label>
+            <!-- multiple visits to one point not supported so set minimum capacity to max station (hard coded at this time) -->
+            <input type="number" id="vehicle_capacity" name="vehicle_capacity" min="15"  required>
+            </div>
+            <input type="submit" value='Generate Route' style="margin-top: 2%;" class="btn btn-basic"/>
+        </form>
+        
+      </div>
+      <div class="container justify-content-center" id= "loader" style="display: none;">
+        <div class="container text-center">
+        <p id='loader-text'>Optimizing Vehicle Route</p>
+        </div>
+        <div class="loader">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="container">
+      {% if status %}
+            <div class="container" >
+                 <div class="container text-center" style="margin-top:2%;">
+             <button type="button" class="btn btn-basic" style="background-color: darkorange; width: 20%;" onclick="print_instructions()">
+                Print Instructions
+            </button>
+            </div>
+                <div class="row" style="width: 150%; margin-left: -20%; margin-top: 1%;">
+                  <div class="col">
+                      <p> <b>Vehicle Route </b></p>
+            <iframe src='route_map' id='map' style="border:0;" frameBorder="0" width="800" height="600"></iframe>
+            </div>
+            <div class="col" style="margin-left: 5%;">
+            <p><b>Driver Instructions</b></p>
+            
+            <iframe src='driver_instructions' id='instructions' style="border:0;"  frameBorder="0" width="500" height="800"></iframe>
+            
+            </div>
+                </div>
+               
+            <div  style='visibility: hidden'>
+                <p id='printinst'></p>
+               </div>
+                </div>
+        {% endif %}
+        
+        {% if msg %}
+        <div class="container justify-content-center" style="margin-top: 10%;">
+        <p class="alert alert-danger"><b> {{ msg }} </b></p>
+        </div>
+        {% endif %}
+        </div>
+        
+    <footer class="container-fluid text-center" style="margin-top: 10%;">
+        <div class='container'>
+      <p>The application created as a part of the Honors Project at Robert Gordon University. Contact: mwojcik@rgu.ac.uk <a href='http://linkedin.com/in/miriam-wojcik'>LinkedIn</a>. 2021</p>
+    </div>
+    </footer>
+</body>

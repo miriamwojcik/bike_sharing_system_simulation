@@ -1,0 +1,162 @@
+{% load static %}
+<head>
+    <title>BSS Planner</title>
+    <link rel="icon" href= {% static "/bike_sharing_system/img/favicon.ico" %} type="image/gif" type="image/gif" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Date picker -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href= {% static "/bike_sharing_system/css/css.css" %}  > 
+    
+</head>
+
+
+<body>
+    <!-- Bootstrap Template https://getbootstrap.com/docs/3.3/examples/starter-template/ -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-inline">
+          <div class="navbar-header">
+          </div>
+            <ul class="nav navbar-nav navbar">
+              <li><a href="/../">SIMULATION</a></li>
+              <li><a href="/planner/forecast">DEMAND FORECAST</a></li>
+              <li><a href="/planner/vehicle_routing">OPTIMIZATION</a></li>
+            </ul>
+          </div>
+      </nav>
+
+
+    <!-- <div class="jumbotron text-center" style='margin-top: 5%;'> -->
+      <div class="container text-center">
+        <div style="padding-top: 10%;">
+        <h3 class='text-center'>Generate Demand Forecast</h3>
+    </div>
+    <!-- </div> -->
+<!-- https://pypi.org/project/django-bootstrap-datepicker-plus/ -->
+<div class="container text-center">
+<h5 style='padding-top: 2%; padding-bottom: 2%; color: #878fd8'><b></b>Please select the date and the parking station id</b></h5>
+<form method="POST" class='form-inline justify-content-center' >
+  {% csrf_token %}
+    <div class="form-group" style="padding-right: 5%;">
+    <label for='date' style="padding-bottom: 5%;">Date:</label>
+    <input type='date' id='date' name='date' required />
+    </div>
+    <div class="form-group" style="padding-right: 5%;">
+    <label for='docking_station' style="padding-bottom: 10%;">Parking Station ID:</label>
+    <select name="docking_station" id="station">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+        <option value="13">13</option>
+        <option value="14">14</option>
+        <option value="15">15</option>
+        <option value="16">16</option>
+        <option value="17">17</option>
+        <option value="18">18</option>
+        <option value="19">19</option>
+        <option value="20">20</option>
+        <option value="21">21</option>
+        <option value="22">22</option>
+        <option value="23">23</option>
+        <option value="24">24</option>
+        <option value="25">25</option>
+        <option value="26">26</option>
+        <option value="27">27</option>
+        <option value="28">28</option>
+        <option value="29">29</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+    <input type="submit" value='Generate Forecast' style="margin-top: 2%;" class="btn btn-basic"/>
+</form>
+</div>
+
+
+    {% if data %}
+
+    <div class="container justify-content-center" style='margin-top: 5%;'>
+        <p><b>Parking Station ID: </b> {{ station_id }} <b style="margin-left: 6%;">Date: </b> {{ date }} <p>    
+        <table class="table-sm text-center" align="center">
+          <thead>
+            <tr>
+            <th>Time</th>
+              <th colspan="2" style="text-align:center">Last Year Data</th>
+              <th colspan="2" style="text-align:center">Forecast</th>
+              <th></th>
+            </tr>
+            <tr>
+                <td></td>
+                <th style="font-size: smaller;">Bikes Rented</th>
+                <th style="font-size: smaller;">Bikes Returned</th>
+                <th style="font-size: smaller;">Bikes Rented</th>
+                <th style="font-size: smaller;">Bikes Returned</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for h, f in data %}
+            <tr>
+            <td> {{ h.time }} </td>
+            <td> {{ h.rented }} </td>
+            <td> {{ h.returned }} </td>
+            <td> {{ f.rented }} </td>
+            <td> {{ f.returns }} </td>
+          </tr>
+          {% endfor %}  
+          </tbody>
+        </table>
+      </div>
+      {% endif %}
+      
+
+      {% if msg %}
+      <div class="container justify-content-center" style="margin-top: 10%;">
+       <p class="alert alert-danger"><b> {{ msg }} </b></p>
+      </div>
+      {% endif %}
+
+    </div>
+
+    
+<!-- displaying objects from db -->
+<!-- 
+
+    {{ trip }} -->
+
+<!-- Display in a table -->
+
+    <!-- after dot attribute from model we want to display -->
+    <!-- <h3>{{ object.test }}</h3>
+
+
+    <p>{{ object.date|date:'d M Y'|upper }}</p>
+
+    <p> {{object.description}} </p> -->
+
+    <!-- For Image:
+    <img src= "{{ object.image.url }}">-->
+
+    <!-- For Link:
+    <a href='{{ object.url }}'>Link</a> -->
+
+
+    
+    <footer class="container-fluid text-center" style="margin-top: 10%;">
+        <div class='container'>
+      <p>The application created as a part of the Honors Project at Robert Gordon University. Contact: mwojcik@rgu.ac.uk <a href='http://linkedin.com/in/miriam-wojcik'>LinkedIn</a>. 2021</p>
+    </div>
+    </footer>
+</body>

@@ -1,0 +1,60 @@
+<!-- Simulation Page Container -->
+{% load static %}
+<html> 
+    <head> 
+        <link rel="icon" href= {% static "/bike_sharing_system/img/favicon.ico" %} type="image/gif" type="image/gif" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+         <!-- Date picker -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href= {% static "/bike_sharing_system/css/css.css" %} >
+       
+        <style>
+            #map{
+                height: 50%;
+                width: 100%;  
+            }
+        
+        
+        </style>
+    </head> 
+  
+    <body> 
+        <!-- Bootstrap Template https://getbootstrap.com/docs/3.3/examples/starter-template/ -->
+    <!-- Navbar -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-inline" >
+          <div class="navbar-header">
+          </div>
+          <ul class="nav navbar-nav navbar">
+              <li><a href="/../">SIMULATION</a></li>
+              <li><a href="/planner/forecast">DEMAND FORECAST</a></li>
+              <li><a href="/planner/vehicle_routing">OPTIMIZATION</a></li>
+            </ul>
+          </div>
+      </nav>
+
+        <div class="container justify-content-center" style='margin-top: 5%;'>
+        <div class="container" style="width: 70%;">
+        <h1 style="margin-top: 5%;">Live System Preview (Simulation)</h1>
+        <div class="container justify-content-center" style='margin-top: 5%;'></div>
+       <iframe src='display_map' id='map'></iframe>
+        </div>
+    </div>
+       
+    </div>
+    <footer class="container-fluid text-center" style="margin-top: 10%;">
+        <div class='container'>
+      <p>The application created as a part of the Honors Project at Robert Gordon University. Contact: mwojcik@rgu.ac.uk <a href='http://linkedin.com/in/miriam-wojcik'>LinkedIn</a>. 2021</p>
+    </div>
+    </footer>
+    </body> 
+  
+    
+  </html>
