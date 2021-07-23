@@ -1,4 +1,4 @@
-//Django application created as a part of an Honours project.
+Django application created as a part of an Honours project.
 
 A simulation of a bike tracking in the Aberdeen bike sharing system.
 A forecasting tool uses a Random Forest Regressor for the demand prediction based on the data from simulation, weather data, and holiday data obtained from holiday library and a weather API.
