@@ -27,7 +27,7 @@ SECRET_KEY = '-#=6y3wvo@oj4(ldvkldjb9ifw5vmlv+9u8ovr%tyoopj&uqiw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['bike-sharing-system-simulation.herokuapp.com']
 
 
 # Application definition
