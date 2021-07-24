@@ -146,7 +146,7 @@ tornado==6.1
 traitlets==5.0.5
 traittypes==0.2.1
 Twisted==21.2.0
-twisted-iocpsupport==1.0.1
+# twisted-iocpsupport==1.0.1
 txaio==21.2.1
 typish==1.9.1
 tzlocal==2.1
