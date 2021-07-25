@@ -2,6 +2,7 @@
 
 from django.apps import AppConfig
 import threading
+import uvicorn
 class AppNameConfig(AppConfig):
     name = 'bike_sharing_system'
 

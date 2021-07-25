@@ -1,1 +1,1 @@
-web: gunicorn bike_sharing_system.wsgi
+web: gunicorn myproject.asgi:application -k uvicorn.workers.UvicornWorker
