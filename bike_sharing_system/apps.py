@@ -5,11 +5,11 @@ import threading
 class AppNameConfig(AppConfig):
     name = 'bike_sharing_system'
 
-    # def ready(self):
+    def ready(self):
 
-    #     from simulation.bg_sim import SimThread
-    #     x = threading.Thread(target = SimThread.run, args=(1,), daemon=True)
-    #     x.start()
+        from simulation.bg_sim import SimThread
+        x = threading.Thread(target = SimThread.run, args=(1,), daemon=True)
+        x.start()
 
 
 
