@@ -1,1 +1,1 @@
-web: gunicorn -w 4 -k uvicorn.workers.UvicornWorker bike_sharing_system:application
+web: gunicorn bike_sharing_system.asgi:application -k uvicorn.workers.UvicornWorker
