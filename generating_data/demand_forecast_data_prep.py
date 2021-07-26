@@ -10,6 +10,7 @@ import holidays
 from generating_data.generate_weather_data import get_weather_forecast
 from simulation.models import Trip_Model
 import json
+from django.db import connection
 
 
 #check is it weekday-1 weekend-0
@@ -65,9 +66,26 @@ def get_day(date):
 
 # GET STATION DATA BY STATION ID
 def get_station_data(station):
+    station_no = int(station)
     station = json.dumps(station)
     # Get trips where the starting station was the station parsed
-    rentals = Trip_Model.objects.filter(starting_station=station)
+    rentals_str = Trip_Model.objects.filter(starting_station=station).all().query.__str__()
+    if station_no<10:
+        rentals_str = rentals_str[:-7] + "'" + rentals_str[-7:] + "'"
+    else:
+        rentals_str = rentals_str[:-8] + "'" + rentals_str[-8:] + "'"
+    name_map = {
+        'id':'id', 
+        'trip_id':'trip_id', 
+        'bike':'bike', 
+        'user':'user', 
+        'starting_station':'starting_station', 
+        'destination_station':'destination_station', 
+        'datetime_start':'datetime_start', 
+        'datetime_end':'datetime_end'
+    }
+
+    rentals = Trip_Model.objects.raw(rentals_str, translations=name_map)
     data = []
     # Create dataframe with the rental time and station id
     for rental in rentals:
@@ -78,10 +96,16 @@ def get_station_data(station):
                 'trip_id' : rental.trip_id
             }
         )
+
     df_rentals = pd.DataFrame(data)
     # Get trips where the destination station was the station parsed and the time the trip finished
-    returns = Trip_Model.objects.filter(destination_station=station).all()
+    returns_str = Trip_Model.objects.filter(destination_station=station).all().query.__str__()
+    if station_no<10:
+        returns_str = returns_str[:-7] + "'" + returns_str[-7:] + "'"
+    else:
+        returns_str = returns_str[:-8] + "'" + returns_str[-8:] + "'"
     # Create dataframe with the return time and station id
+    returns = Trip_Model.objects.raw(returns_str, translations=name_map)
     data = []
     for ret in returns:
         data.append(

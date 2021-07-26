@@ -27,7 +27,7 @@ def forecast(request):
         current_date = datetime.date.today()
         check_delta = timedelta(days=7)
         if current_date + check_delta >= date.date() and current_date < date.date():
-            delta= timedelta(days=365)
+            delta= timedelta(days=10)
             last_year = date - delta
             hist_data = get_last_year_station_data(station, last_year)
             for item in hist_data:
