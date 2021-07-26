@@ -81,8 +81,8 @@ class Simulation:
         # dont generate trips out of hours
         if self.dt.hour in not_operating:
             weight=0
-        else:
-                weight = math.floor(weight)
+        if weight != 0:
+                weight = math.ceil(weight)
         new_trips = random.randint(0,weight)
         i=0
         while i < new_trips:
